@@ -66,11 +66,9 @@ def add():
     CSV.add_data(date, ammount, type, description)
 
 def plot_transaction(df):
-    df.set_index("Date", inplace=True) #sets the date as sort of label of the rows. Acts similar to-> 1.  2.  3. Inplace means that the data can be modified without a new file being created.
+    df.set_index("Date", inplace=True) 
 
     income_df = df[df["Type"] == "Income"].resample("D").sum().reindex(df.index, fill_value=0)
-    # df[df["Type"] == "Income"] -> selects rows which has income. resample() is used to handle time data. it groups data according to days (that is what the d inside means.). sum adds the income of same days. 
-    # reindex besically reindexes the dates to include missing dates in the data with 0. this is done to have a sort of continuity
     expense_df = df[df["Type"] == "Expense"].resample("D").sum().reindex(df.index, fill_value=0)
 
     plt.figure(figsize=(10,5))
